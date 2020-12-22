@@ -1,0 +1,57 @@
+body{
+    overflow-x: hidden;
+}
+
+.positionTopRight{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+#turn_label{
+    font-size: 1.5rem;
+    margin-top: 50px;
+    text-align: center;
+}
+
+#export_button{
+    display: block;
+}
+
+#controller_div{
+    margin: 20px 0 20px 0;
+}
+
+#history_div{
+    display: grid;
+    grid-template-columns: 50vw 50vw;
+}
+.history_label{
+    text-align: center;
+}
+#player0_history{
+    grid-column: 1 / 2;
+}
+#player1_history{
+    grid-column: 2 / 2;
+}
+.history_wrapper{
+    display: flex;
+    justify-content: center;
+}
+
+.color2{
+    color: #433d3c;
+}
+.color1{
+    color: #944e6c;
+}
+.color0{
+    color: #cd5d7d;
+}
+.color-1{
+    color: #e9c496;
+}
+.color-2{
+    color: #83a95c;
+}
