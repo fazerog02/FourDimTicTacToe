@@ -21,6 +21,9 @@ body{
 #controller_div{
     margin: 20px 0 20px 0;
 }
+#error_text{
+    color: #cd5d7d;
+}
 
 #history_div{
     display: grid;

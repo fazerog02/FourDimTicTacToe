@@ -8,25 +8,25 @@
 <body>
 <div id="init_div">
     <div id="game_init_div">
-        <input id="player0_name" type="text" placeholder="player1 name">
-        <input id="player1_name" type="text" placeholder="player2 name">
-        <button type="button" onclick="initGame()">game start!!</button>
+        <input id="player0_name" type="text" placeholder="player1の名前">
+        <input id="player1_name" type="text" placeholder="player2の名前">
+        <button type="button" onclick="initGame()">スタート</button>
     </div>
 
     <div id="import_div">
-        <label for="import_json">import json</label>
+        <label for="import_json">jsonファイル</label>
         <input id="import_json" type="file">
-        <button type="button" onclick="importGame()">import</button>
+        <button type="button" onclick="importGame()">インポート</button>
     </div>
 </div>
 
 <div id="game_div" style="opacity: 0">
-    <div class="positionTopRight">spent time　<span id="timer_h">00</span>:<span id="timer_m">00</span>:<span id="timer_s">00</span></div>
+    <div class="positionTopRight">経過時間　<span id="timer_h">00</span>:<span id="timer_m">00</span>:<span id="timer_s">00</span></div>
 
-    <p id="turn_label"><span id="turn_player_label"></span> turn!!</p>
+    <p id="turn_label"><span id="turn_player_label"></span> の番です</p>
 
     <div id="export_div">
-        <a id="export_button" type="button" download="FourDimTicTacToe_export.json" onclick="exportGame()">export</a>
+        <a id="export_button" type="button" download="FourDimTicTacToe_export.json" onclick="exportGame()">エクスポート</a>
     </div>
 
     <div id="controller_div">
@@ -34,18 +34,19 @@
         <select id="dim1"><option value="2" class="color2">2</option><option value="1" class="color1">1</option><option value="0"  class="color0">0</option><option value="-1"  class="color-1">-1</option><option value="-2"  class="color-2">-2</option></select>
         <select id="dim2"><option value="2" class="color2">2</option><option value="1" class="color1">1</option><option value="0"  class="color0">0</option><option value="-1"  class="color-1">-1</option><option value="-2"  class="color-2">-2</option></select>
         <select id="dim3"><option value="2" class="color2">2</option><option value="1" class="color1">1</option><option value="0"  class="color0">0</option><option value="-1"  class="color-1">-1</option><option value="-2"  class="color-2">-2</option></select>
-        <button type="button" onclick="playTurn()">set</button>
+        <button type="button" onclick="playTurn()">設置する</button>
+        <span id="error_text" style="opacity: 0">ここには設置できません</span>
     </div>
 
     <div id="history_div">
         <div id="player0_history">
-            <p class="history_label"><span id="player0_history_label"></span> history</p>
+            <p class="history_label"><span id="player0_history_label"></span>のログ</p>
             <div class="history_wrapper">
                 <ol id="player0_history_ol"></ol>
             </div>
         </div>
         <div id="player1_history">
-            <p class="history_label"><span id="player1_history_label"></span> history</p>
+            <p class="history_label"><span id="player1_history_label"></span>のログ</p>
             <div class="history_wrapper">
                 <ol id="player1_history_ol"></ol>
             </div>
