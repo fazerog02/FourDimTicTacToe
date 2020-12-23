@@ -18,28 +18,42 @@ function isBlank(str){
     return str === "" || !str.match(/\S/g);
 }
 
-function isDimsOnArea(dims){
-    const dim0_check = dims[0] >= 0 && dims[0] < AREA_WIDTH;
-    const dim1_check = dims[1] >= 0 && dims[1] < AREA_WIDTH;
-    const dim2_check = dims[2] >= 0 && dims[2] < AREA_WIDTH;
-    const dim3_check = dims[3] >= 0 && dims[3] < AREA_WIDTH;
-    return dim0_check && dim1_check && dim2_check && dim3_check;
+function isPositionOnArea(position){
+    const x_check = position[0] >= 0 && position[0] < AREA_WIDTH;
+    const y_check = position[1] >= 0 && position[1] < AREA_WIDTH;
+    const z_check = position[2] >= 0 && position[2] < AREA_WIDTH;
+    const w_check = position[3] >= 0 && position[3] < AREA_WIDTH;
+    return x_check && y_check && z_check && w_check;
 }
 
-function addDimsValue(dims, add_value, ope){
-    for(let i = 0; i < AREA_WIDTH; i++){
-        dims[i] += ope * add_value[i];
+function addPositionValue(position, add_value, ope){
+    position = position.slice();
+    for(let i = 0; i < 4; i++){
+        position[i] += ope * add_value[i];
     }
-    return dims;
+    return position;
 }
 
-function dimsToIndex(dims){
-    dims = dims.slice()
-    dims[0] += 2;
-    dims[1] += 2;
-    dims[2] += 2;
-    dims[3] += 2;
-    return dims;
+function positionToIndex(position){
+    position = position.slice()
+    position[0] += 2;
+    position[1] += 2;
+    position[2] += 2;
+    position[3] += 2;
+    return position;
+}
+
+function isIncludes(ary_includes_ary, target_ary){
+    let correct_count = 0;
+    if(ary_includes_ary.length <= 0) return false;
+    for(let i = 0; i < ary_includes_ary.length; i++){
+        correct_count = 0;
+        for(let j = 0; j < ary_includes_ary[i].length; j++){
+            if(ary_includes_ary[i][j] === target_ary[j]) correct_count++;
+        }
+        if(correct_count === target_ary.length) return true;
+    }
+    return false;
 }
 
 class Area{
@@ -74,41 +88,62 @@ class Game{
         this.timer_interval = timer_interval;
     }
 
-    checkCanSetStone(dims){
-        dims = dimsToIndex(dims);
-        return this.area.value[dims[0]][dims[1]][dims[2]][dims[3]] === null;
+    checkCanSetStone(position){
+        position = positionToIndex(position);
+        return this.area.value[position[0]][position[1]][position[2]][position[3]] === null;
     }
 
-    setStone(dims){
-        dims = dimsToIndex(dims);
-        this.area.value[dims[0]][dims[1]][dims[2]][dims[3]] = this.current_player;
+    setStone(position){
+        position = positionToIndex(position);
+        this.area.value[position[0]][position[1]][position[2]][position[3]] = this.current_player;
     }
 
     changeCurrentPlayer(){
         this.current_player = this.current_player === 0 ? 1 : 0;
     }
 
-    checkLine(dims, add_value){
+    checkLine(position, add_value){
+        position = position.slice();
+        const position_origin = position.slice();
+        let correct_count = 1;
         const ope_list = [1, -1];
         for(let i = 0; i < 2; i++){
-            while(isDimsOnArea(addDimsValue(dims, add_value))){
-                dims = addDimsValue(dims, add_value, ope_list[i]);
-                if(this.area.value[dims[0]][dims[1]][dims[2]][dims[3]] !== this.current_player && this.area.value[dims[0]][dims[1]][dims[2]][dims[3]] !== 2) return false;
+            position = position_origin;
+            while(isPositionOnArea(addPositionValue(position, add_value, ope_list[i]))){
+                position = addPositionValue(position, add_value, ope_list[i]);
+                if(this.area.value[position[0]][position[1]][position[2]][position[3]] === this.current_player || this.area.value[position[0]][position[1]][position[2]][position[3]] === 2){
+                    correct_count++;
+                }else{
+                    break;
+                }
             }
         }
-        return true;
+        return correct_count === AREA_WIDTH;
     }
 
-    checkGameEnd(dims){
-        dims = dimsToIndex(dims);
-        const add_values = [
-            [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [1, 1, 0, 0], [-1, 1, 0, 0],
-            [1, 1, 1, 0], [-1, 1, 1, 0], [1, -1, 1, 0], [-1, -1, 1, 0],
-
-        ];
+    checkGameEnd(position){
+        position = positionToIndex(position);
+        const add_value_elements = [1, 0, -1];
+        const add_values = [];
+        for(let i = 0; i < 3; i++){
+            for(let j = 0; j < 3; j++){
+                for(let k = 0; k < 3; k++){
+                    for(let l = 0; l < 3; l++){
+                        let x = add_value_elements[i];
+                        let y = add_value_elements[j];
+                        let z = add_value_elements[k];
+                        let w = add_value_elements[l];
+                        if(
+                            !(x === 0 && y === 0 && z === 0 && w === 0) &&
+                            !isIncludes(add_values, [-1*x, -1*y, -1*z, -1*w])
+                        ) add_values.push([x, y, z, w]);
+                    }
+                }
+            }
+        }
 
         for(let i = 0; i < add_values.length; i++){
-            if(this.checkLine(add_values[i])) return true;
+            if(this.checkLine(position, add_values[i])) return true;
         }
 
         return false;
@@ -130,8 +165,8 @@ function initGame(){
 }
 
 function startGame(){
-    if(game.area.value[0][0][0][0] !== 2){
-        game.area.value[0][0][0][0] = 2;
+    if(game.area.value[2][2][2][2] !== 2){
+        game.area.value[2][2][2][2] = 2;
         setHistory(0, [0, 0, 0, 0]);
         setHistory(1, [0, 0, 0, 0]);
     }
@@ -161,10 +196,10 @@ function endGame(){
     turn_label.innerText = `${game.player_names[game.current_player]} win!!`;
 }
 
-function setHistory(current_player, dims){
+function setHistory(current_player, position){
     const player_ol = document.getElementById(`player${current_player}_history_ol`);
     let new_li = document.createElement("li");
-    new_li.innerHTML = `(<span class='${"color" + dims[0].toString()}'>${dims[0]}</span>, <span class='${"color" + dims[1].toString()}'>${dims[1]}</span>, <span class='${"color" + dims[2].toString()}'>${dims[2]}</span>, <span class='${"color" + dims[3].toString()}'>${dims[3]}</span>)`;
+    new_li.innerHTML = `(<span class='${"color" + position[0].toString()}'>${position[0]}</span>, <span class='${"color" + position[1].toString()}'>${position[1]}</span>, <span class='${"color" + position[2].toString()}'>${position[2]}</span>, <span class='${"color" + position[3].toString()}'>${position[3]}</span>)`;
     player_ol.appendChild(new_li);
 }
 
@@ -177,25 +212,26 @@ function playTurn(){
     const error_text = document.getElementById("error_text");
     error_text.style.opacity = "0";
 
-    const dim0 = parseInt(document.getElementById("dim0").value);
-    const dim1 = parseInt(document.getElementById("dim1").value);
-    const dim2 = parseInt(document.getElementById("dim2").value);
-    const dim3 = parseInt(document.getElementById("dim3").value);
-    const dims = [dim0, dim1, dim2, dim3];
+    const x = parseInt(document.getElementById("x").value);
+    const y = parseInt(document.getElementById("y").value);
+    const z = parseInt(document.getElementById("z").value);
+    const w = parseInt(document.getElementById("w").value);
+    const position = [x, y, z, w];
 
-    if(game.checkCanSetStone(dims)){
-        game.setStone(dims);
+    if(game.checkCanSetStone(position)){
+        game.setStone(position);
     }else{
         error_text.style.opacity = "1";
         return;
     }
 
-    setHistory(game.current_player, dims);
+    setHistory(game.current_player, position);
 
-    if(game.checkGameEnd(dims)){
+    if(game.checkGameEnd(position)){
         endGame();
     }else{
         game.changeCurrentPlayer();
+        initTurn();
     }
 }
 
@@ -209,10 +245,10 @@ function exportGame(){
     for(let j = 0; j < 2; j++){
         let player_li_list = document.getElementById(`player${j}_history_ol`).children;
         for(let i = 0; i < player_li_list.length; i++){
-            let dims_text = player_li_list[i].innerText;
-            dims_text = dims_text.replace("(", "").replace(")", "");
-            let dims =dims_text .split(", ");
-            export_json["histories"][`player${j}`].push(dims);
+            let position_text = player_li_list[i].innerText;
+            position_text = position_text.replace("(", "").replace(")", "");
+            let position =position_text .split(", ");
+            export_json["histories"][`player${j}`].push(position);
         }
     }
 
@@ -243,20 +279,21 @@ function importGame(){
 
         for(let j = 0; j < 2; j++){
             for(let i = 0; i < histories[`player${j}`].length; i++){
-                let dim0 = histories[`player${j}`][i][0];
-                let dim1 = histories[`player${j}`][i][1];
-                let dim2 = histories[`player${j}`][i][2];
-                let dim3 = histories[`player${j}`][i][3];
-                let dims = [dim0, dim1, dim2, dim3];
+                let x = parseInt(histories[`player${j}`][i][0]);
+                let y = parseInt(histories[`player${j}`][i][1]);
+                let z = parseInt(histories[`player${j}`][i][2]);
+                let w = parseInt(histories[`player${j}`][i][3]);
+                let position = [x, y, z, w];
 
                 game.current_player = j;
-                game.setStone(dims);
+                game.setStone(position);
 
-                setHistory(game.current_player, dims);
+                setHistory(game.current_player, position);
             }
         }
 
         game.current_player = current_player;
+        game.area.value[2][2][2][2] = 2;
         startGame();
     })
 }
