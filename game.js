@@ -18,6 +18,12 @@ function isBlank(str){
     return str === "" || !str.match(/\S/g);
 }
 
+function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 function isPositionOnArea(position){
     const x_check = position[0] >= 0 && position[0] < AREA_WIDTH;
     const y_check = position[1] >= 0 && position[1] < AREA_WIDTH;
@@ -82,7 +88,7 @@ class Area{
 class Game{
     constructor(player0_name, player1_name, start_time, timer_interval){
         this.area = new Area();
-        this.current_player = Math.random() % 2 === 0 ? 0 : 1;
+        this.current_player = getRandomIntInclusive(0, 1);
         this.player_names = [player0_name, player1_name];
         this.start_time = start_time;
         this.timer_interval = timer_interval;
@@ -96,6 +102,10 @@ class Game{
     setStone(position){
         position = positionToIndex(position);
         this.area.value[position[0]][position[1]][position[2]][position[3]] = this.current_player;
+    }
+
+    getNotCurrentPlayer(){
+        return this.current_player === 0 ? 1 : 0;
     }
 
     changeCurrentPlayer(){
@@ -174,10 +184,10 @@ function startGame(){
     const init_div = document.getElementById("init_div");
     document.body.removeChild(init_div);
 
-    const player0_history_label = document.getElementById("player0_history_label");
-    const player1_history_label = document.getElementById("player1_history_label");
-    player0_history_label.innerText = game.player_names[0];
-    player1_history_label.innerText = game.player_names[1];
+    const player0_label = document.getElementById("player0_label");
+    const player1_label = document.getElementById("player1_label");
+    player0_label.innerText = game.player_names[0];
+    player1_label.innerText = game.player_names[1];
 
     const game_div = document.getElementById("game_div");
     game_div.style.opacity = "1";
@@ -192,8 +202,8 @@ function endGame(){
     const controller_div = document.getElementById("controller_div");
     game_div.removeChild(controller_div);
 
-    const turn_label = document.getElementById("turn_label");
-    turn_label.innerText = `${game.player_names[game.current_player]} win!!`;
+    const player_label = document.getElementById(`player${game.current_player}_label`);
+    player_label.innerHTML= `${game.player_names[game.current_player]} win!`;
 }
 
 function setHistory(current_player, position){
@@ -204,19 +214,46 @@ function setHistory(current_player, position){
 }
 
 function initTurn(){
-    const turn_label = document.getElementById("turn_player_label");
-    turn_label.innerText = game.player_names[game.current_player];
+    const turn_player_label = document.getElementById(`player${game.current_player}_label`);
+    const not_turn_player_label = document.getElementById(`player${game.getNotCurrentPlayer()}_label`);
+    turn_player_label.style.zIndex = "100";
+    turn_player_label.style.transform = "scale(1.2, 1.2) skew(15deg, 0)";
+    not_turn_player_label.style.zIndex = "10";
+    not_turn_player_label.style.transform = "skew(15deg, 0)";
+}
+
+function getPositionFromController(){
+    const x = document.getElementById("x");
+    const y = document.getElementById("y");
+    const z = document.getElementById("z");
+    const w = document.getElementById("w");
+
+    let pos_x, pos_y, pos_z, pos_w;
+    for(let i = 0; i < x.children.length; i++){
+        let input_element = x.children[i].children[0];
+        if(input_element.checked === true) pos_x = parseInt(input_element.value);
+    }
+    for(let i = 0; i < y.children.length; i++){
+        let input_element = y.children[i].children[0];
+        if(input_element.checked === true) pos_y = parseInt(input_element.value);
+    }
+    for(let i = 0; i < z.children.length; i++){
+        let input_element = z.children[i].children[0];
+        if(input_element.checked === true) pos_z = parseInt(input_element.value);
+    }
+    for(let i = 0; i < w.children.length; i++){
+        let input_element = w.children[i].children[0];
+        if(input_element.checked === true) pos_w = parseInt(input_element.value);
+    }
+
+    return [pos_x, pos_y, pos_z, pos_w];
 }
 
 function playTurn(){
     const error_text = document.getElementById("error_text");
     error_text.style.opacity = "0";
 
-    const x = parseInt(document.getElementById("x").value);
-    const y = parseInt(document.getElementById("y").value);
-    const z = parseInt(document.getElementById("z").value);
-    const w = parseInt(document.getElementById("w").value);
-    const position = [x, y, z, w];
+    const position = getPositionFromController();
 
     if(game.checkCanSetStone(position)){
         game.setStone(position);
@@ -277,6 +314,7 @@ function importGame(){
 
         game = new Game(player_names[0], player_names[1], start_time, timer_interval);
 
+        let is_game_end = false;
         for(let j = 0; j < 2; j++){
             for(let i = 0; i < histories[`player${j}`].length; i++){
                 let x = parseInt(histories[`player${j}`][i][0]);
@@ -287,6 +325,8 @@ function importGame(){
 
                 game.current_player = j;
                 game.setStone(position);
+                console.log(game.checkGameEnd(position));
+                if(game.checkGameEnd(position)) is_game_end = true;
 
                 setHistory(game.current_player, position);
             }
@@ -295,5 +335,6 @@ function importGame(){
         game.current_player = current_player;
         game.area.value[2][2][2][2] = 2;
         startGame();
+        if(is_game_end) endGame();
     })
 }

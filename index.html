@@ -21,32 +21,60 @@
 </div>
 
 <div id="game_div" style="opacity: 0">
-    <div class="positionTopRight">経過時間　<span id="timer_h">00</span>:<span id="timer_m">00</span>:<span id="timer_s">00</span></div>
-
-    <p id="turn_label"><span id="turn_player_label"></span> の番です</p>
+    <div id="label_div">
+        <div id="player0_label" class="background_red white"></div>
+        <div id="player1_label" class="background_cyan white"></div>
+    </div>
+    <div class="position_top_right">経過時間　<span id="timer_h">00</span>:<span id="timer_m">00</span>:<span id="timer_s">00</span></div>
 
     <div id="export_div">
         <a id="export_button" type="button" download="FourDimTicTacToe_export.json" onclick="exportGame()">エクスポート</a>
     </div>
 
     <div id="controller_div">
-        <select id="x"><option value="2" class="color2">2</option><option value="1" class="color1">1</option><option value="0"  class="color0">0</option><option value="-1"  class="color-1">-1</option><option value="-2"  class="color-2">-2</option></select>
-        <select id="y"><option value="2" class="color2">2</option><option value="1" class="color1">1</option><option value="0"  class="color0">0</option><option value="-1"  class="color-1">-1</option><option value="-2"  class="color-2">-2</option></select>
-        <select id="z"><option value="2" class="color2">2</option><option value="1" class="color1">1</option><option value="0"  class="color0">0</option><option value="-1"  class="color-1">-1</option><option value="-2"  class="color-2">-2</option></select>
-        <select id="w"><option value="2" class="color2">2</option><option value="1" class="color1">1</option><option value="0"  class="color0">0</option><option value="-1"  class="color-1">-1</option><option value="-2"  class="color-2">-2</option></select>
+        <p class="controller_position_label">x</p>
+        <div id="x" class="inline_radio">
+            <div class="radio_div"><input name="pos_x" type="radio" value="2"><label class="color2">2</label></div>
+            <div class="radio_div"><input name="pos_x" type="radio" value="1"><label class="color1">1</label></div>
+            <div class="radio_div"><input name="pos_x" type="radio" value="0" checked="checked"><label class="color0">0</label></div>
+            <div class="radio_div"><input name="pos_x" type="radio" value="-1"><label class="color-1">-1</label></div>
+            <div class="radio_div"><input name="pos_x" type="radio" value="-2"><label class="color-2">-2</label></div>
+        </div>
+        <p class="controller_position_label">y</p>
+        <div id="y" class="inline_radio">
+            <div class="radio_div"><input name="pos_y" type="radio" value="2"><label class="color2">2</label></div>
+            <div class="radio_div"><input name="pos_y" type="radio" value="1"><label class="color1">1</label></div>
+            <div class="radio_div"><input name="pos_y" type="radio" value="0" checked="checked"><label class="color0">0</label></div>
+            <div class="radio_div"><input name="pos_y" type="radio" value="-1"><label class="color-1">-1</label></div>
+            <div class="radio_div"><input name="pos_y" type="radio" value="-2"><label class="color-2">-2</label></div>
+        </div>
+        <p class="controller_position_label">z</p>
+        <div id="z" class="inline_radio">
+            <div class="radio_div"><input name="pos_z" type="radio" value="2"><label class="color2">2</label></div>
+            <div class="radio_div"><input name="pos_z" type="radio" value="1"><label class="color1">1</label></div>
+            <div class="radio_div"><input name="pos_z" type="radio" value="0" checked="checked"><label class="color0">0</label></div>
+            <div class="radio_div"><input name="pos_z" type="radio" value="-1"><label class="color-1">-1</label></div>
+            <div class="radio_div"><input name="pos_z" type="radio" value="-2"><label class="color-2">-2</label></div>
+        </div>
+        <p class="controller_position_label">w</p>
+        <div id="w" class="inline_radio">
+            <div class="radio_div"><input name="pos_w" type="radio" value="2"><label class="color2">2</label></div>
+            <div class="radio_div"><input name="pos_w" type="radio" value="1"><label class="color1">1</label></div>
+            <div class="radio_div"><input name="pos_w" type="radio" value="0" checked="checked"><label class="color0">0</label></div>
+            <div class="radio_div"><input name="pos_w" type="radio" value="-1"><label class="color-1">-1</label></div>
+            <div class="radio_div"><input name="pos_w" type="radio" value="-2"><label class="color-2">-2</label></div>
+        </div>
         <button type="button" onclick="playTurn()">設置する</button>
         <span id="error_text" style="opacity: 0">ここには設置できません</span>
     </div>
 
     <div id="history_div">
         <div id="player0_history">
-            <p class="history_label"><span id="player0_history_label"></span>のログ</p>
             <div class="history_wrapper">
                 <ol id="player0_history_ol"></ol>
             </div>
         </div>
         <div id="player1_history">
-            <p class="history_label"><span id="player1_history_label"></span>のログ</p>
             <div class="history_wrapper">
                 <ol id="player1_history_ol"></ol>
             </div>

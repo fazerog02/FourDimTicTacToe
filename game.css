@@ -2,16 +2,53 @@ body{
     overflow-x: hidden;
 }
 
-.positionTopRight{
+.red{
+    color: #D8656A;
+}
+.cyan{
+    color: #62A89C;
+}
+.white{
+    color: #d0dfeb;
+}
+.background_red{
+    background-color: #D8656A;
+}
+.background_cyan{
+    background-color: #62A89C;
+}
+
+.position_top_right{
     position: absolute;
     top: 10px;
     right: 10px;
 }
 
-#turn_label{
-    font-size: 1.5rem;
-    margin-top: 50px;
+#label_div{
+    display: grid;
+    grid-template-columns: 50vw;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+#player0_label{
+    position: relative;
+    left: -5vw;
+    grid-column: 1 / 2;
+    height: 100px;
+    width: 55vw;
+    transform: skew(15deg, 0);
+    transition: transform 100ms ease;
     text-align: center;
+    font-size: 4rem;
+}
+#player1_label{
+    grid-column: 2 / 2;
+    height: 100px;
+    width: 55vw;
+    transform: skew(15deg, 0);
+    transition: width 100ms ease, transform 100ms ease;
+    text-align: center;
+    font-size: 4rem;
 }
 
 #export_button{
@@ -20,6 +57,9 @@ body{
 
 #controller_div{
     margin: 20px 0 20px 0;
+}
+.radio_div{
+    display: inline-block;
 }
 #error_text{
     color: #cd5d7d;
