@@ -25,46 +25,50 @@
         <div id="player0_label" class="background_red white"></div>
         <div id="player1_label" class="background_cyan white"></div>
     </div>
-    <div class="position_top_right">経過時間　<span id="timer_h">00</span>:<span id="timer_m">00</span>:<span id="timer_s">00</span></div>
-
-    <div id="export_div">
-        <a id="export_button" type="button" download="FourDimTicTacToe_export.json" onclick="exportGame()">エクスポート</a>
-    </div>
+    <div id="clock">経過時間　<span id="timer_h">00</span>:<span id="timer_m">00</span>:<span id="timer_s">00</span></div>
 
     <div id="controller_div">
-        <p class="controller_position_label">x</p>
-        <div id="x" class="inline_radio">
-            <div class="radio_div"><input name="pos_x" type="radio" value="2"><label class="color2">2</label></div>
-            <div class="radio_div"><input name="pos_x" type="radio" value="1"><label class="color1">1</label></div>
-            <div class="radio_div"><input name="pos_x" type="radio" value="0" checked="checked"><label class="color0">0</label></div>
-            <div class="radio_div"><input name="pos_x" type="radio" value="-1"><label class="color-1">-1</label></div>
-            <div class="radio_div"><input name="pos_x" type="radio" value="-2"><label class="color-2">-2</label></div>
+        <div id="controller_x">
+            <p class="controller_position_label inline">x </p>
+            <div id="x" class="inline_radio inline">
+                <div class="radio_div inline"><input name="pos_x" type="radio" value="2" id="x2"><label class="radio2" for="x2">2</label></div>
+                <div class="radio_div inline"><input name="pos_x" type="radio" value="1" id="x1"><label class="radio1" for="x1">1</label></div>
+                <div class="radio_div inline"><input name="pos_x" type="radio" value="0" checked="checked" id="x0"><label class="radio0" for="x0">0</label></div>
+                <div class="radio_div inline"><input name="pos_x" type="radio" value="-1" id="x-1"><label class="radio-1" for="x-1">-1</label></div>
+                <div class="radio_div inline"><input name="pos_x" type="radio" value="-2" id="x-2"><label class="radio-2" for="x-2">-2</label></div>
+            </div>
         </div>
-        <p class="controller_position_label">y</p>
-        <div id="y" class="inline_radio">
-            <div class="radio_div"><input name="pos_y" type="radio" value="2"><label class="color2">2</label></div>
-            <div class="radio_div"><input name="pos_y" type="radio" value="1"><label class="color1">1</label></div>
-            <div class="radio_div"><input name="pos_y" type="radio" value="0" checked="checked"><label class="color0">0</label></div>
-            <div class="radio_div"><input name="pos_y" type="radio" value="-1"><label class="color-1">-1</label></div>
-            <div class="radio_div"><input name="pos_y" type="radio" value="-2"><label class="color-2">-2</label></div>
+        <div id="controller_y">
+            <p class="controller_position_label inline">y </p>
+            <div id="y" class="inline_radio inline">
+                <div class="radio_div inline"><input name="pos_y" type="radio" value="2" id="y2"><label class="radio2" for="y2">2</label></div>
+                <div class="radio_div inline"><input name="pos_y" type="radio" value="1" id="y1"><label class="radio1" for="y1">1</label></div>
+                <div class="radio_div inline"><input name="pos_y" type="radio" value="0" checked="checked" id="y0"><label class="radio0" for="y0">0</label></div>
+                <div class="radio_div inline"><input name="pos_y" type="radio" value="-1" id="y-1"><label class="radio-1" for="y-1">-1</label></div>
+                <div class="radio_div inline"><input name="pos_y" type="radio" value="-2" id="y-2"><label class="radio-2" for="y-2">-2</label></div>
+            </div>
         </div>
-        <p class="controller_position_label">z</p>
-        <div id="z" class="inline_radio">
-            <div class="radio_div"><input name="pos_z" type="radio" value="2"><label class="color2">2</label></div>
-            <div class="radio_div"><input name="pos_z" type="radio" value="1"><label class="color1">1</label></div>
-            <div class="radio_div"><input name="pos_z" type="radio" value="0" checked="checked"><label class="color0">0</label></div>
-            <div class="radio_div"><input name="pos_z" type="radio" value="-1"><label class="color-1">-1</label></div>
-            <div class="radio_div"><input name="pos_z" type="radio" value="-2"><label class="color-2">-2</label></div>
+        <div id="controller_z">
+            <p class="controller_position_label inline">z </p>
+            <div id="z" class="inline_radio inline">
+                <div class="radio_div inline"><input name="pos_z" type="radio" value="2" id="z2"><label class="radio2" for="z2">2</label></div>
+                <div class="radio_div inline"><input name="pos_z" type="radio" value="1" id="z1"><label class="radio1" for="z1">1</label></div>
+                <div class="radio_div inline"><input name="pos_z" type="radio" value="0" checked="checked" id="z0"><label class="radio0" for="z0">0</label></div>
+                <div class="radio_div inline"><input name="pos_z" type="radio" value="-1" id="z-1"><label class="radio-1" for="z-1">-1</label></div>
+                <div class="radio_div inline"><input name="pos_z" type="radio" value="-2" id="z-2"><label class="radio-2" for="z-2">-2</label></div>
+            </div>
         </div>
-        <p class="controller_position_label">w</p>
-        <div id="w" class="inline_radio">
-            <div class="radio_div"><input name="pos_w" type="radio" value="2"><label class="color2">2</label></div>
-            <div class="radio_div"><input name="pos_w" type="radio" value="1"><label class="color1">1</label></div>
-            <div class="radio_div"><input name="pos_w" type="radio" value="0" checked="checked"><label class="color0">0</label></div>
-            <div class="radio_div"><input name="pos_w" type="radio" value="-1"><label class="color-1">-1</label></div>
-            <div class="radio_div"><input name="pos_w" type="radio" value="-2"><label class="color-2">-2</label></div>
+        <div id="controller_w">
+            <p class="controller_position_label inline">w </p>
+            <div id="w" class="inline_radio inline">
+                <div class="radio_div inline"><input name="pos_w" type="radio" value="2" id="w2"><label class="radio2" for="w2">2</label></div>
+                <div class="radio_div inline"><input name="pos_w" type="radio" value="1" id="w1"><label class="radio1" for="w1">1</label></div>
+                <div class="radio_div inline"><input name="pos_w" type="radio" value="0" checked="checked" id="w0"><label class="radio0" for="w0">0</label></div>
+                <div class="radio_div inline"><input name="pos_w" type="radio" value="-1" id="w-1"><label class="radio-1" for="w-1">-1</label></div>
+                <div class="radio_div inline"><input name="pos_w" type="radio" value="-2" id="w-2"><label class="radio-2" for="w-2">-2</label></div>
+            </div>
         </div>
-        <button type="button" onclick="playTurn()">設置する</button>
+        <button id="set_button" type="button" onclick="playTurn()">設置する</button>
         <span id="error_text" style="opacity: 0">ここには設置できません</span>
     </div>
 
@@ -79,6 +83,10 @@
                 <ol id="player1_history_ol"></ol>
             </div>
         </div>
+    </div>
+
+    <div id="export_div">
+        <a id="export_button" type="button" download="FourDimTicTacToe_export.json" onclick="exportGame()">エクスポート</a>
     </div>
 </div>
 

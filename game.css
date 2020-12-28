@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
+
 body{
+    font-family: 'Noto Sans JP', sans-serif;
     overflow-x: hidden;
 }
 
@@ -18,17 +21,17 @@ body{
     background-color: #62A89C;
 }
 
-.position_top_right{
-    position: absolute;
-    top: 10px;
-    right: 10px;
+#clock{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    opacity: 0.7;
 }
 
 #label_div{
     display: grid;
     grid-template-columns: 50vw;
-    margin-top: 100px;
-    margin-bottom: 100px;
+    margin-bottom: 20px;
 }
 #player0_label{
     position: relative;
@@ -39,7 +42,7 @@ body{
     transform: skew(15deg, 0);
     transition: transform 100ms ease;
     text-align: center;
-    font-size: 4rem;
+    font-size: 3.5rem;
 }
 #player1_label{
     grid-column: 2 / 2;
@@ -48,21 +51,83 @@ body{
     transform: skew(15deg, 0);
     transition: width 100ms ease, transform 100ms ease;
     text-align: center;
-    font-size: 4rem;
-}
-
-#export_button{
-    display: block;
+    font-size: 3.5rem;
 }
 
 #controller_div{
     margin: 20px 0 20px 0;
+    display: grid;
+    grid-template-rows: 1fr 50px 25px;
+    grid-template-columns: 25vw 25vw 25vw 25vw;
+}
+.controller_position_label{
+    font-size: 2.5rem;
+}
+#controller_x{
+    text-align: center;
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
+}
+#controller_y{
+    text-align: center;
+    grid-row: 1 / 2;
+    grid-column: 2 / 3;
+}
+#controller_z{
+    text-align: center;
+    grid-row: 1 / 2;
+    grid-column: 3 / 4;
+}
+#controller_w{
+    text-align: center;
+    grid-row: 1 / 2;
+    grid-column: 4 / 5;
 }
 .radio_div{
-    display: inline-block;
+    margin-bottom: 20px;
+}
+.radio_div input{
+    display: none;
+}
+.radio_div label{
+    font-size: 1.5rem;
+    border-radius: 5px;
+    padding: 5px 20px 5px 20px;
+}
+.radio_div input:checked + .radio2{
+    color: #e6e9ef;
+    background-color: #d615d6;
+}
+.radio_div input:checked + .radio1{
+    color: #e6e9ef;
+    background-color: #443aa5;
+}
+.radio_div input:checked + .radio0{
+    color: #e6e9ef;
+    background-color: #ca3361;
+}
+.radio_div input:checked + .radio-1{
+    color: #e6e9ef;
+    background-color: #e0a945;
+}
+.radio_div input:checked + .radio-2{
+    color: #e6e9ef;
+    background-color: #83a95c;
+}
+#set_button{
+    margin-top: 10px;
+    margin-left: 10%;
+    width: 80%;
+    grid-row: 2 / 3;
+    grid-column: 1 / 5;
 }
 #error_text{
     color: #cd5d7d;
+    grid-row: 3 / 4;
+    grid-column: 1 / 5;
+}
+.inline{
+    display: block;
 }
 
 #history_div{
@@ -84,17 +149,23 @@ body{
 }
 
 .color2{
-    color: #433d3c;
+    color: #d615d6;
 }
 .color1{
-    color: #944e6c;
+    color: #443aa5;
 }
 .color0{
-    color: #cd5d7d;
+    color: #ca3361;
 }
 .color-1{
-    color: #e9c496;
+    color: #e0a945;
 }
 .color-2{
     color: #83a95c;
+}
+
+#export_button{
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
 }
