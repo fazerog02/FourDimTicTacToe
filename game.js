@@ -192,6 +192,8 @@ function startGame(){
     const game_div = document.getElementById("game_div");
     game_div.style.opacity = "1";
 
+    document.body.style.overflowY = "visible";
+
     initTurn();
 }
 
@@ -209,7 +211,7 @@ function endGame(){
 function setHistory(current_player, position){
     const player_ol = document.getElementById(`player${current_player}_history_ol`);
     let new_li = document.createElement("li");
-    new_li.innerHTML = `(<span class='${"color" + position[0].toString()}'>${position[0]}</span>, <span class='${"color" + position[1].toString()}'>${position[1]}</span>, <span class='${"color" + position[2].toString()}'>${position[2]}</span>, <span class='${"color" + position[3].toString()}'>${position[3]}</span>)`;
+    new_li.innerHTML = `(<span class='${"color" + position[0].toString()}'>${position[0].toString().padStart(2, " ")}</span>,<span class='${"color" + position[1].toString()}'>${position[1].toString().padStart(2, " ")}</span>,<span class='${"color" + position[2].toString()}'>${position[2].toString().padStart(2, " ")}</span>,<span class='${"color" + position[3].toString()}'>${position[3].toString().padStart(2, " ")}</span>)`;
     player_ol.appendChild(new_li);
 }
 
