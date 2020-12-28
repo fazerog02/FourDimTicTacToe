@@ -7,14 +7,19 @@
 </head>
 <body style="overflow-y: hidden">
 <div id="init_div">
+    <div id="game_title_div">
+        <p id="game_title">4次元○×ゲーム</p>
+        <div id="game_title_border"></div>
+    </div>
     <div id="game_init_div">
         <input id="player0_name" type="text" placeholder="player1の名前">
         <input id="player1_name" type="text" placeholder="player2の名前">
         <button type="button" onclick="initGame()">スタート</button>
     </div>
 
+    <p>or</p>
+
     <div id="import_div">
-        <label for="import_json">jsonファイル</label>
         <input id="import_json" type="file">
         <button type="button" onclick="importGame()">インポート</button>
     </div>
